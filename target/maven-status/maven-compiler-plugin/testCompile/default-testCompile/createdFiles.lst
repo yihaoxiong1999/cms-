@@ -1,0 +1,4 @@
+com\yihaoxiong\cms\service\impl\ArticleServiceImplTest.class
+com\yihaoxiong\cms\service\impl\CommentServiceImplTest.class
+com\yihaoxiong\cms\service\impl\UserServiceImplTest.class
+com\yihaoxiong\cms\service\impl\JunitParent.class
