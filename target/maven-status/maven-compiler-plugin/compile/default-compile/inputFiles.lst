@@ -29,6 +29,7 @@ D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管�
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\service\impl\ChannelServiceImpl.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\domain\Article.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\util\Md5Util.java
+D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\kafka\ArticleListener.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\service\impl\CategoryServiceImpl.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\dao\SlideMapper.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\controller\AdminController.java

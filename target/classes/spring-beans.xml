@@ -86,5 +86,7 @@
 		<property name="basePackage" value="com.yihaoxiong.cms.dao"></property>
 
 	</bean>
-
+ 
+ <!-- 加载kafka配置 -->
+ <import resource="consumer.xml"/>
 </beans>
