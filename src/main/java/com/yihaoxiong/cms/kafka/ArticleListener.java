@@ -15,7 +15,6 @@ public class ArticleListener implements MessageListener<String, String> {
   @Autowired
   ArticleService articleService;
 
-  //
   //监听消息的方法
   @Override
   public void onMessage(ConsumerRecord<String, String> data) {
