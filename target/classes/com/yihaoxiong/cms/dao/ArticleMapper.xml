@@ -293,4 +293,8 @@
 		updated = #{updated,jdbcType=TIMESTAMP}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
+	<!-- 查询所有文章，用来保存到Es -->
+	<select id="findAll" resultMap="BaseResultMap">
+		select * from cms_article
+	</select>
 </mapper>

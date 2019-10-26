@@ -1,5 +1,7 @@
 package com.yihaoxiong.cms.service;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.yihaoxiong.cms.domain.User;
 import com.yihaoxiong.cms.vo.UserVO;
@@ -11,6 +13,15 @@ import com.yihaoxiong.cms.vo.UserVO;
  * <br>Author:衣豪雄(1315712803@qq.com)
  */
 public interface UserService {
+
+  /**
+   * 
+   * <br>Description:TODO 用户列表小二
+   * <br>Author:衣豪雄(1315712803@qq.com)
+   * <br>Date:2019年10月23日
+   * @return
+   */
+  List<User> findAll();
 
   /**
    * 

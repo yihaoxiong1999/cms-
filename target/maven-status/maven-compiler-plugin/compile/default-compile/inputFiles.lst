@@ -11,6 +11,7 @@ D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管�
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\dao\ArticleMapper.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\service\ChannelService.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\service\CategoryService.java
+D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\util\ESUtils.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\dao\CommentMapper.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\util\CMSException.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\controller\CommentController.java
@@ -39,5 +40,6 @@ D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管�
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\service\CommentService.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\util\CMSContant.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\util\UserInterceptor.java
+D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\dao\ArticleRepository.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\domain\Slide.java
 D:\Java-老师讲课（视频+源码）\05-小实训（一）（项目开发管理+CMS）\1705E-CMS\2019-09-20\下午\yihaoxiong1-cms\src\main\java\com\yihaoxiong\cms\service\impl\SlideServiceImpl.java

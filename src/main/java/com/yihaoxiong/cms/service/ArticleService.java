@@ -6,6 +6,9 @@ import com.github.pagehelper.PageInfo;
 import com.yihaoxiong.cms.domain.Article;
 
 public interface ArticleService {
+
+  List<Article> findAll();
+
   /**
    * 
    * <br>Description:TODO 文章列表查询

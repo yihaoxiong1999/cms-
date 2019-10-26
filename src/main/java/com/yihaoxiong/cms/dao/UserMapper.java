@@ -13,6 +13,16 @@ import com.yihaoxiong.cms.domain.User;
  * <br>Author:衣豪雄(1315712803@qq.com)
  */
 public interface UserMapper {
+
+  /**
+   * 
+   * <br>Description:TODO 用户列表小二
+   * <br>Author:衣豪雄(1315712803@qq.com)
+   * <br>Date:2019年10月23日
+   * @return
+   */
+  List<User> findAll();
+
   /**
    * 
    * <br>Description:TODO 用户列表查询

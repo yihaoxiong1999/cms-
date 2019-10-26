@@ -5,6 +5,7 @@ import java.util.List;
 import com.yihaoxiong.cms.domain.Article;
 
 public interface ArticleMapper {
+  List<Article> findAll();
 
   /**
    * 

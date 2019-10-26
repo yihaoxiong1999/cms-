@@ -66,6 +66,12 @@ public class ArticleServiceImpl implements ArticleService {
     return articleMapper.articleabc();
   }
 
+  @Override
+  public List<Article> findAll() {
+
+    return articleMapper.findAll();
+  }
+
   /**
    * 
    * <br>Description:TODO 查询所有文章根据评论的数量正序

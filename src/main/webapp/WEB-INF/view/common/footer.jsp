@@ -9,7 +9,7 @@
 			<p align="center" style="font-size: 30px">
 				衣豪雄&nbsp;&nbsp;&nbsp;&nbsp;
 				QQ:<a target="_self" href="tencent://message/?uin=1315712803&Site=&Menu=yes">1315712803</a>&nbsp;&nbsp;&nbsp;&nbsp;
-				Email:<a href="mailto:690204468@qq.com">1315712803@qq.com</a>
+				Email:<a href="mailto:1315712803@qq.com">1315712803@qq.com</a>
 			</p>
 	</div>
 </div>

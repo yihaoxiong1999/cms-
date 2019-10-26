@@ -21,8 +21,19 @@ public class ArticleListener implements MessageListener<String, String> {
   public void onMessage(ConsumerRecord<String, String> data) {
     //获取kafka的jsonString字符串
     String jsonString = data.value();
-    Article article = JSON.parseObject(jsonString, Article.class);
-    int insertSelective = articleService.insertSelective(article);
-  }
+    if (jsonString.startsWith("articleID")) {
+      //在消费端获取文章id,再执行数据库+1操作
+      String[] split = jsonString.split("=");
+      String id = split[1];
+      //从数据库查询文章
+      Article article = articleService.selectByPrimaryKey(Integer.parseInt(id));
+      article.setHits(article.getHits() + 1);
+      //更新到数据库
+      articleService.updateByPrimaryKeySelective(article);
 
+    } else {
+      Article article = JSON.parseObject(jsonString, Article.class);
+      int insertSelective = articleService.insertSelective(article);
+    }
+  }
 }

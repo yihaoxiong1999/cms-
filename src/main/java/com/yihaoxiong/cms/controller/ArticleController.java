@@ -11,6 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +27,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
+import com.yihaoxiong.cms.dao.ArticleRepository;
 import com.yihaoxiong.cms.domain.Article;
 import com.yihaoxiong.cms.domain.Comment;
 import com.yihaoxiong.cms.domain.User;
 import com.yihaoxiong.cms.service.ArticleService;
 import com.yihaoxiong.cms.service.CommentService;
+import com.yihaoxiong.cms.util.ESUtils;
 import com.yihaoxiong.cms.util.PageUtil;
 
 @RequestMapping("article")
@@ -38,6 +45,44 @@ public class ArticleController {
 
   @Resource
   private CommentService commentService;
+
+  @Resource
+  private RedisTemplate redisTemplate;
+
+  @Resource
+  ThreadPoolTaskExecutor executor;
+
+  //注入es的仓库
+  @Resource
+  private ArticleRepository articleRepository;
+
+  //注入estemplate
+  @Resource
+  ElasticsearchTemplate elasticsearchTemplate;
+
+  @RequestMapping("search")
+  public String search(String key, Model model, @RequestParam(defaultValue = "1") Integer page,
+    @RequestParam(defaultValue = "5") Integer pageSize) {
+    //显示搜索花费的时间
+    long start = System.currentTimeMillis();
+    //es普通的搜索显示
+    //List<Article> articles = articleRepository.findByTitle(key);
+    //es高亮显示
+    AggregatedPage<Article> selectObjects = (AggregatedPage<Article>) ESUtils
+      .selectObjects(elasticsearchTemplate, Article.class, page, pageSize, new String[] { "title" }, key);
+
+    List<Article> articles = selectObjects.getContent();
+    long end = System.currentTimeMillis();
+    System.err.println("本次搜索耗时:" + (end - start) + "毫秒");
+
+    String pages = PageUtil.page(page, (int) selectObjects.getTotalElements(), "/article/search?key=" + key,
+      pageSize);
+    model.addAttribute("pages", pages);
+
+    model.addAttribute("hotArticles", articles);
+    model.addAttribute("key", key);
+    return "index/index";
+  }
 
   /**
    * 
@@ -166,6 +211,9 @@ public class ArticleController {
     return commentService.insert(comment) > 0;
   }
 
+  @Resource
+  KafkaTemplate<String, String> kafkaTemplate;
+
   /**
    * 
    * <br>Description:TODO 个人查看单个文章
@@ -176,14 +224,56 @@ public class ArticleController {
    */
   @GetMapping("selectByUser")
   public String selectByUser(Integer id, Model model, @RequestParam(defaultValue = "1") Integer page,
-    @RequestParam(defaultValue = "10") Integer pageSize) {
+    @RequestParam(defaultValue = "10") Integer pageSize, HttpServletRequest request) {
+
+    //根据id查询文章
     Article article = articleService.selectByPrimaryKey(id);
+
+    /**
+     * 这里是A卷的模拟
+     */
+    /**
+    *    //1.拼接key
+    *       
+    *      String ip = request.getRemoteAddr();
+    *     String redisKey = "Hits_" + id + "_" + ip;
+    *      //2.查询Redis里有没有该key(要想查询Redis中是否有数据，先注入RedisTemplate)
+    *     String key = (String) redisTemplate.opsForValue().get(redisKey);
+    *     //3.如果有key，则不作任何操作。
+    *      //4.如果没有，则使用spring线程池异步的执行数据库+1操作
+    *      //4.1在spring-beans.xml中引入约束
+    *      //4.2编写spring线程池的配置
+    *     if (key == null) {
+    *        executor.execute(new Runnable() {
+    *          //从线程池中获取一个线程，异步执行
+    *     @Override
+    *   public void run() {
+    *    //获取文章点击量
+    *   Integer hits = article.getHits();
+    *  System.out.println(redisKey + "保存到了Redis");
+    * //点击量加1 
+    *           article.setHits(hits + 1);
+    *   //保存到数据库
+    *          articleService.updateByPrimaryKeySelective(article);
+    *   
+    *        //保存到redis中
+    *       redisTemplate.opsForValue().set(redisKey, "", 5, TimeUnit.MINUTES);
+    *
+    *   }*});*}
+    **/
+    /**
+     * B卷：当用户发送文章是，往kafka发送文章ID,在消费端获取文章id，再执行数据库+1操作
+     */
+    //1.往kafka发送文章ID
+    //1.1这一步是生产者，因此，我们要把生产者的配置文件copy过来，由Spring-beans.xml加载配置文件
+    kafkaTemplate.send("article", "articleID=" + id + "");
 
     //评论
     PageInfo<Comment> info = commentService.selects(article.getId(), page, pageSize);
+
     String pages = PageUtil.page(page, info.getPages(), "/article/selectByUser", pageSize);
 
-    model.addAttribute("article", article);
+    model.addAttribute("article", article);//封装文章对象
     model.addAttribute("pages", pages);
     model.addAttribute("comments", info.getList());
     return "my/article";
@@ -274,6 +364,10 @@ public class ArticleController {
 
     // 2.把文章内容保存到数据库
     // 默认文章的基本属性
+
+    //总结：只要牵扯到redis存取数据的，为了保证数据的实时性，只要牵扯到对数据增删改的操作，必须把redis中的数据清空了
+    //从而就可以达到数据同步的效果
+    redisTemplate.delete("NewArticles");
 
     artice.setUpdated(new Date());// 文章修改时间
     // 发布人
@@ -368,10 +462,18 @@ public class ArticleController {
   * @param article
   * @return
   */
+  //注入文章的仓库
   @ResponseBody
   @PostMapping("update")
   public boolean update(Article article) {
-    return articleService.updateByPrimaryKeySelective(article) > 0;
+    //在审核之前我们要做什么事情
+    //2.修改文章的审核状态
+    int inSuccess = articleService.updateByPrimaryKeySelective(article);
+    //1.保存此文章到es索引库  //注入文章的仓库已经有了
+    Article article1 = articleService.selectByPrimaryKey(article.getId());
+    articleRepository.save(article1);
+
+    return inSuccess > 0;
   }
 
 }

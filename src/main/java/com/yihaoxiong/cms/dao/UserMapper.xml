@@ -160,4 +160,8 @@
       role = #{role,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="findAll" resultMap="BaseResultMap">
+  		select * from cms_user
+  </select>
 </mapper>
