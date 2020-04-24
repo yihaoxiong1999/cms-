@@ -8,6 +8,9 @@
 	<packaging>war</packaging>
 
 	<!-- 定义主要版本号 -->
+	
+	
+	
 	<properties>
 		<spring.version>5.1.2.RELEASE</spring.version>
 		<mybatis.version>3.4.2</mybatis.version>
